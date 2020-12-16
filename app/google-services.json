@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "882931857141",
+    "project_id": "bhoomi-1d4f6",
+    "storage_bucket": "bhoomi-1d4f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:882931857141:android:27e1a250636d2c86f537bc",
+        "android_client_info": {
+          "package_name": "com.example.bhoomi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "882931857141-9kp2toqr6amnts08oibacnv432nrq6rp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bhoomi",
+            "certificate_hash": "f352e0072152e911dedac7fcb3565ae4aaf6666f"
+          }
+        },
+        {
+          "client_id": "882931857141-s3buee98b53rnljs7llhlqukoetfj4e9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpAuGv3v5kTcOEqtBvT14SmWuwKMi1XRQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "882931857141-s3buee98b53rnljs7llhlqukoetfj4e9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
