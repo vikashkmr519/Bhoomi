@@ -3,16 +3,22 @@ package com.example.bhoomi.Fragments
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
+import android.nfc.Tag
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import com.example.bhoomi.LoginLogout.LoginActivity
 import com.example.bhoomi.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_account.*
 import kotlinx.android.synthetic.main.fragment_account.view.*
 
@@ -20,6 +26,7 @@ import kotlinx.android.synthetic.main.fragment_account.view.*
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+
 
 /**
  * A simple [Fragment] subclass.
@@ -33,6 +40,11 @@ class AccountFragment : Fragment() {
     private lateinit var auth : FirebaseAuth
     val pickImage =100
     private var imageUri: Uri? = null
+    val TAG = "AccountFragment"
+    val firestore = FirebaseFirestore.getInstance()
+    val db = FirebaseAuth.getInstance()
+    val firebaseStorage = FirebaseStorage.getInstance()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,20 +60,46 @@ class AccountFragment : Fragment() {
         // Inflate the layout for this fragment
         val view =inflater.inflate(R.layout.fragment_account, container, false)
         auth = FirebaseAuth.getInstance()
+        showProfileViewOnFragmentStart(view)
         setProfileImage(view)
+        getProfileData(view)
         logout(view);
 
 
         return view
     }
 
+    private fun getProfileData(view: View?) {
+        firestore.collection("users").get().addOnSuccessListener { documents ->
+            for(doc in documents ){
+                view?.fullName?.text = doc.get("fullName").toString()
+                view?.emailAddress?.text = doc.get("emailAddress").toString()
+                view?.username?.text = doc.get("userName").toString()
+            }
+        }.addOnFailureListener{
+            Toast.makeText(context,"Error Occured",Toast.LENGTH_LONG).show()
+            Log.d(TAG,"Error Occured While fetching details : ${it.message}")
+        }
+
+    }
+
+    private fun showProfileViewOnFragmentStart(view : View) {
+        firebaseStorage.getReference().child("profileImages/${db.uid}/profileImage.jpg").downloadUrl.addOnSuccessListener {
+            Picasso.with(context).load(it.toString()).into(view?.AccountProfileImage)
+        }
+
+    }
+
     private fun setProfileImage(view: View) {
 
-            view.profile_image.setOnClickListener(View.OnClickListener {
+            view.AccountProfileImage.setOnClickListener(View.OnClickListener {
                 val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
                 startActivityForResult(gallery,pickImage)
             })
+
     }
+
+
 
 
 
@@ -73,13 +111,32 @@ class AccountFragment : Fragment() {
             startActivity(intent)
 
 
+
         }
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && requestCode == pickImage) {
+        if (resultCode == RESULT_OK && requestCode == pickImage && data!=null) {
             imageUri = data?.data
-            profile_image.setImageURI(imageUri)
+            view?.AccountProfileImage?.setImageURI(imageUri)
+            uploadProfileImage()
+
+        }
+    }
+
+    private fun uploadProfileImage() {
+        if(imageUri != null){
+            var imageRef = FirebaseStorage.getInstance().reference.child("profileImages/${db.uid}/profileImage.jpg")
+            imageRef.putFile(imageUri!!)
+                    .addOnSuccessListener {
+                        Toast.makeText(context,"Profile Image Uploaded",Toast.LENGTH_LONG).show()
+                        Log.d(TAG,"File Uploaded")
+                    }
+                    .addOnFailureListener{
+                        Log.d(TAG,"Error in profile Image upload form Account fragment : ${
+                            it.message
+                        }")
+                    }
         }
     }
 

@@ -11,10 +11,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bhoomi.Adapters.PostAdapter
 import com.example.bhoomi.Data.Posts
 import com.example.bhoomi.R
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
+import java.sql.Timestamp
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,6 +39,8 @@ class HomeFragment : Fragment() {
     private lateinit var adapter :PostAdapter
     var firestore = FirebaseFirestore.getInstance()
     val TAG = "HOMEFRAGMENT"
+    var auth = FirebaseAuth.getInstance()
+    var firebaseStorage = FirebaseStorage.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,43 +55,57 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         rootView =inflater.inflate(R.layout.fragment_home, container, false)
 
-        //initializeRecyclerView()
-        getfromFirestore()
+        initializeRecyclerView()
 
         return rootView
     }
 
     private fun getfromFirestore() {
+
+        // please dry run this , here is error
+        
         firestore.collection("posts").get()
-            .addOnSuccessListener { document ->
-                if(document != null){
-                    for(doc in document){
-                        val post = doc.data
-                        rootView.username.text = post.get("image").toString()
-                        Picasso.with(context).load(post.get("image").toString()).into(rootView.postImg)
+                .addOnSuccessListener { document ->
+                    if(document != null){
+                        for(doc in document){
+                            val docItems = doc.data
+                            var username =""
+                            firestore.collection("users").document(auth.uid.toString()).get().addOnSuccessListener {
+                                if(it.exists()){
+                                    username = it.get("userName").toString()
+                                }
+                            }
+                            var profileImage = ""
+                            firebaseStorage.getReference().child("profileImages/${auth.uid}/profileImage.jpg").downloadUrl.addOnSuccessListener {
+                                if(it!=null){
+                                    profileImage = it.toString()
+                                }
+                            }
+                            var post = Posts(null,docItems.get("username").toString(),docItems.get("image").toString(), Timestamp(System.currentTimeMillis()),
+                                    0,profileImage)
+                            list.add(post)
+
+                        }
+
                     }
+
                 }
-            }
-            .addOnFailureListener{
-                Log.d(TAG,"Error occured : ${it.message}")
-            }
+                .addOnFailureListener{
+                    Log.d(TAG,"Error occured : ${it.message}")
+                }
     }
 
-//    private fun initializeRecyclerView() {
-//        recyclerView = rootView.findViewById(R.id.postsRecyclerView)
-//        fillthelist()
-//        adapter = PostAdapter(list)
-//
-//        recyclerView.layoutManager = LinearLayoutManager(activity)
-//        recyclerView.adapter = adapter
-//
-//    }
+    private fun initializeRecyclerView() {
+        recyclerView = rootView.findViewById(R.id.postsRecyclerView)
+        getfromFirestore()
+        adapter = PostAdapter(list)
 
-    private fun fillthelist() {
-
-
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.adapter = adapter
 
     }
+
+
 
     companion object {
         /**

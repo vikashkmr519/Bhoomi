@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/profile_image"
+            android:id="@+id/AccountProfileImage"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_centerHorizontal="true"
@@ -23,7 +23,7 @@
             app:civ_border_color="@color/black"/>
         <Button
             android:id="@+id/editBtn"
-            android:layout_below="@id/profile_image"
+            android:layout_below="@id/AccountProfileImage"
             android:text="Edit data"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="16dp"
@@ -45,76 +45,58 @@
                     android:id="@+id/tvname"
                     android:text="Name : "
                     android:textStyle="bold"
-                    android:textSize="20dp"
+                    android:textSize="17dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
-                    android:id="@+id/name"
+                    android:id="@+id/fullName"
                     android:layout_marginStart="30dp"
                     android:text="Vikash kumar"
-                    android:textSize="20dp"
+                    android:textSize="17dp"
                     android:layout_toRightOf="@id/tvname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:layout_marginTop="10dp"
-                    android:id="@+id/tvvillage"
-                    android:text="Village : "
+                    android:id="@+id/tvemail"
+                    android:text="Email : "
                     android:layout_below="@id/tvname"
                     android:textStyle="bold"
-                    android:textSize="20dp"
+                    android:textSize="17dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
-                    android:id="@+id/village"
+                    android:id="@+id/emailAddress"
                     android:layout_marginTop="10dp"
                     android:layout_below="@id/tvname"
                     android:layout_marginStart="30dp"
-                    android:text="Parliament"
-                    android:textSize="20dp"
-                    android:layout_toRightOf="@id/tvvillage"
+                    android:text="vikashkmr519@gmail.com"
+                    android:textSize="17dp"
+                    android:layout_toRightOf="@id/tvemail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
-                    android:id="@+id/tvcity"
+                    android:id="@+id/tvusername"
                     android:layout_marginTop="10dp"
-                    android:text="City : "
-                    android:layout_below="@id/tvvillage"
+                    android:text="Username : "
+                    android:layout_below="@id/tvemail"
                     android:textStyle="bold"
-                    android:textSize="20dp"
+                    android:textSize="17dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
-                    android:id="@+id/city"
+                    android:id="@+id/username"
                     android:layout_marginTop="10dp"
-                    android:layout_marginStart="30dp"
-                    android:text="Gurgaon"
-                    android:layout_below="@id/tvvillage"
-                    android:textSize="20dp"
+                    android:layout_marginStart="40dp"
+                    android:text="Username"
+                    android:layout_below="@id/tvemail"
+                    android:textSize="17dp"
                     android:layout_toRightOf="@id/tvname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/tvstate"
-                    android:layout_marginTop="10dp"
-                    android:text="State : "
-                    android:textStyle="bold"
-                    android:layout_below="@id/tvcity"
-                    android:textSize="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/state"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="30dp"
-                    android:text="Haryana"
-                    android:layout_below="@id/tvcity"
-                    android:textSize="20dp"
-                    android:layout_toRightOf="@id/tvname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
 
-                </TextView>
+
+
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 

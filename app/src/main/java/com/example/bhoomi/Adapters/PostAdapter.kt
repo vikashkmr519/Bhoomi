@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bhoomi.Data.Posts
 import com.example.bhoomi.R
+import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 import androidx.recyclerview.widget.RecyclerView.ViewHolder as ViewHolder
 
@@ -17,9 +18,17 @@ class PostAdapter(private var itemlist : List<Posts>):
     RecyclerView.Adapter<PostAdapter.MyViewHolder>() {
 
 
+
+
     inner class MyViewHolder(view : View): RecyclerView.ViewHolder(view){
         var usernameTv = view.findViewById<TextView>(R.id.username)
-        var image =  view.findViewById<ImageView>(R.id.postImage)
+        var image =  view.findViewById<ImageView>(R.id.postImg)
+        var postProfileImage = view.findViewById<ImageView>(R.id.postProfileImage)
+        var likePost = view.findViewById<ImageView>(R.id.likePost)
+        var sharePost = view.findViewById<ImageView>(R.id.sharePost)
+        var addComment = view.findViewById<ImageView>(R.id.addPostComment)
+
+
 
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -32,6 +41,7 @@ class PostAdapter(private var itemlist : List<Posts>):
         var item = itemlist[position]
         holder.usernameTv?.text = item.username
         Picasso.with(holder.image.context).load(item.image).into(holder.image);
+        Picasso.with(holder.postProfileImage.context).load(item.profileImage).into(holder.postProfileImage)
     }
 
     override fun getItemCount(): Int {

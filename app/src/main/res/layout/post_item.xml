@@ -37,7 +37,7 @@
                     <de.hdodenhof.circleimageview.CircleImageView
 
                         xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/profile_image"
+                        android:id="@+id/postProfileImage"
                         android:layout_width="30dp"
                         android:layout_marginStart="20dp"
                         android:layout_marginBottom="20dp"
@@ -55,6 +55,7 @@
                     android:layout_weight="2"
                     android:layout_height="wrap_content">
                     <TextView
+                        android:id="@+id/postUsernameTv"
                         android:text="Username"
                         android:textStyle="bold"
                         android:textSize="20dp"
@@ -90,7 +91,7 @@
             android:layout_height="400dp">
             <ImageView
 
-                android:id="@+id/postImage"
+                android:id="@+id/postImg"
                 android:src="@drawable/farmer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -120,24 +121,33 @@
                 android:layout_marginStart="20dp"
                 android:src="@drawable/ic_baseline_add_comment_24"
                 android:layout_toRightOf="@id/likePost"
-                android:id="@+id/addComment"
+                android:id="@+id/addPostComment"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp">
 
             </ImageView>
             <ImageView
                 android:layout_marginStart="20dp"
-                android:id="@+id/share"
-                android:layout_toRightOf="@id/addComment"
+                android:id="@+id/sharePost"
+                android:layout_toRightOf="@id/addPostComment"
                 android:src="@drawable/share"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"/>
             <ImageView
+                android:id="@+id/savePost"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/save_post"
                 android:layout_marginEnd="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"></ImageView>
+            <RelativeLayout
+                android:id="@+id/commentRV"
+                android:visibility="gone"
+                android:layout_below="@id/savePost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </RelativeLayout>
         </RelativeLayout>
 
 

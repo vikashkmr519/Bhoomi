@@ -67,7 +67,7 @@ class SignUpActivity : AppCompatActivity()  {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "createUserWithEmail:success")
                     val user = auth.currentUser
-                    firestore.collection("users").add(User(fullname,username,email,password))
+                    firestore.collection("users").document(auth.uid.toString()).set(User(fullname,username,email,password))
                     val intent = Intent(this,MainActivity::class.java)
                     startActivity(intent)
 
