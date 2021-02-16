@@ -7,10 +7,12 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.example.bhoomi.Data.User
 import com.example.bhoomi.MainActivity
 import com.example.bhoomi.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 import java.nio.file.FileVisitResult
@@ -20,6 +22,7 @@ class SignUpActivity : AppCompatActivity()  {
     private val TAG = "SignUpActivity"
     //firebase auth declared
     private lateinit var auth :FirebaseAuth
+    val firestore = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +31,7 @@ class SignUpActivity : AppCompatActivity()  {
         auth = FirebaseAuth.getInstance()
 
         signupBtnRegister.setOnClickListener{
-            createAccount(SignupUsername.text.toString(),SignupPassword.text.toString())
+            createAccount(emailAddress.text.toString(),SignupPassword.text.toString(),SignupUsername.text.toString(),fullName.text.toString())
         }
 
         loginBtnRegister.setOnClickListener{
@@ -52,7 +55,7 @@ class SignUpActivity : AppCompatActivity()  {
         }
     }
 
-    private fun createAccount(email:String ,password : String){
+    private fun createAccount(email:String ,password : String,username : String, fullname: String){
         Log.d(TAG,"create account : $email")
         if(!validateForm()){
             return
@@ -64,6 +67,7 @@ class SignUpActivity : AppCompatActivity()  {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "createUserWithEmail:success")
                     val user = auth.currentUser
+                    firestore.collection("users").add(User(fullname,username,email,password))
                     val intent = Intent(this,MainActivity::class.java)
                     startActivity(intent)
 
@@ -94,6 +98,7 @@ class SignUpActivity : AppCompatActivity()  {
             if(task.isSuccessful){
                 // Sign in success, update UI with the signed-in user's information
                 Log.d(TAG, "signInWithEmail:success")
+
                 val intent = Intent(this,MainActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -114,17 +119,32 @@ class SignUpActivity : AppCompatActivity()  {
         auth.signOut()
        val intent = Intent(this,LoginActivity::class.java)
         startActivity(intent)
-        finish()
+        onDestroy()
     }
 
     private fun validateForm() : Boolean{
         var valid = true
-        val email = SignupUsername.text.toString()
-        val password = SignupPassword.text.toString()
-        if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)){
-            SignupUsername.error ="Required"
+        val fullname = fullName.text.toString()
+        val email = emailAddress.text?.trim().toString()
+        val password = SignupPassword.text?.trim().toString()
+        val username = SignupUsername.text?.trim().toString()
+        if(TextUtils.isEmpty(email)  ){
+            emailAddress.error ="Required"
             valid = false
         }
+        if(TextUtils.isEmpty(password) ){
+            SignupPassword.error = "Required"
+            valid = false
+        }
+        if(TextUtils.isEmpty(username)){
+            SignupUsername.error = "Required"
+            valid = false
+        }
+        if(TextUtils.isEmpty(fullname)){
+            fullName.error = "Required"
+            valid = false
+        }
+
         return valid
 
     }

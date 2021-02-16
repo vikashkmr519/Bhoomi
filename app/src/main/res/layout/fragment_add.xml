@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.AddFragment">
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:elevation="10dp"
+            android:layout_margin="5dp"
+            android:id="@+id/addPostImage"
+            android:tooltipText="Add Image"
+            android:background="@drawable/ic_baseline_add_comment_24"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"/>
+       <Button
+           android:id="@+id/btnSelectImage"
+           android:layout_below="@id/addPostImage"
+           android:text="Select Image from Gallery"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+
+       </Button>
+
+        <Button
+            android:id="@+id/btnUploadImage"
+            android:layout_below="@id/btnSelectImage"
+            android:text="upload Post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </Button>
+    </RelativeLayout>
+</FrameLayout>

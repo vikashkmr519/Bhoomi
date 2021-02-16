@@ -24,9 +24,28 @@
                 android:textSize="50dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_below="@id/logintext"
+                android:id="@+id/FullNameET"
+                app:boxStrokeWidth="1dp"
+                app:boxStrokeColor="@android:color/background_light"
+
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/fullName"
+
+                android:hint="Full Name"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_below="@id/FullNameET"
                 android:id="@+id/SignUpUsernameWrapper"
                 app:boxStrokeWidth="1dp"
                 app:boxStrokeColor="@android:color/background_light"
@@ -35,10 +54,31 @@
                 android:layout_width="match_parent"
 
                 android:layout_height="wrap_content">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/SignupUsername"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/SignupUsername"
 
-                    android:hint="Username"
+                android:hint="Username"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_below="@id/SignUpUsernameWrapper"
+                android:id="@+id/emailAddressWrapper"
+                app:boxStrokeWidth="1dp"
+                app:boxStrokeColor="@android:color/background_light"
+
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailAddress"
+
+                    android:hint="Email Address"
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -49,7 +89,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginTop="10dp"
-                android:layout_below="@id/SignUpUsernameWrapper"
+                android:layout_below="@id/emailAddressWrapper"
                 android:id="@+id/SignupPasswordWrapper"
                 app:boxStrokeWidth="1dp"
                 app:boxStrokeColor="@android:color/background_light"
